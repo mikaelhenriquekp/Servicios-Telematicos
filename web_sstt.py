@@ -14,7 +14,7 @@ import re           # Analizador sintáctico
 import logging      # Para imprimir logs
 
 
-NOMBRE_DOMINIO = "clubdeajedrez7565.com"
+NOMBRE_DOMINIO = "clubdeajedrez7565.org"
 EMAILS_VALIDOS = ["sebastian@" + NOMBRE_DOMINIO, "mikael@" + NOMBRE_DOMINIO]
 
 BUFSIZE = 8192 # Tamaño máximo del buffer que se puede utilizar
@@ -159,14 +159,14 @@ def process_web_request(cs, webroot):
                 enviar_mensaje(cs, "HTTP/1.1 505 HTTP Version Not Supported\r\n\r\n")
                 cerrar_conexion(cs)
                 break
-
+            #Comprobamos que el mét-odo esté comprendido en [GET, POST]
+            #Sino: ERROR
             if method not in ["GET", "POST"]:
                 enviar_mensaje(cs, "HTTP/1.1 405 Method Not Allowed\r\n\r\n")
                 cerrar_conexion(cs)
                 break
-
+            #Tratamiento del mét-odo POST
             if method == "POST":
-                
                 body = request_lines[-1]  # El cuerpo está en la última línea
                 match = re.search(r'email=([^&]*)', body)
                 email = match.group(1) if match else ""
@@ -193,6 +193,7 @@ def process_web_request(cs, webroot):
                 cerrar_conexion(cs)
                 break
 
+            #Tratamiento del mét-odo GET: Si no es POST, es GET. Nos ahorranos la comprobación
             resource = "index.html" if url == "/" else url.lstrip("/")
             file_path = os.path.join(webroot, resource)
             logger.info("Recurso pedido: {}".format(resource))
