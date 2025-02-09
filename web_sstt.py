@@ -93,7 +93,7 @@ def process_cookies(headers,  cs):
     for header in headers:
         if header.startswith("Cookie:"):
             cookies = header.split(":")[1].strip()
-            match = re.search(r'cookie_counter=(\d+)', cookies)
+            match = re.search(r'cookie_counter_7565=(\d+)', cookies)
             if match:
                 cookie_value = int(match.group(1))
                 if cookie_value >= MAX_ACCESOS:
@@ -225,7 +225,7 @@ def process_web_request(cs, webroot):
                     enviar_mensaje(cs, "HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n")
                     cerrar_conexion(cs)
                     break
-                response_headers.insert(-1, "Set-Cookie: cookie_counter={}; Path=/; Max-Age={}".format(cookie_value, COOKIE_MAX_TIME))
+                response_headers.insert(-1, "Set-Cookie: cookie_counter_7565={}; Path=/; Max-Age={}".format(cookie_value, COOKIE_MAX_TIME))
 
             response = "\r\n".join(response_headers).encode() + content # Convertir headers a bytes antes de concatenar
             enviar_mensaje(cs, response)
