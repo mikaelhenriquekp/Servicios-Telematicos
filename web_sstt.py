@@ -175,19 +175,28 @@ def process_web_request(cs, webroot):
                 logger.info("Email recibido: '{}' -> {}".format(email, "Válido" if email in EMAILS_VALIDOS else "Inválido"))
 
                 if email in EMAILS_VALIDOS:
-                    response_body = "<html><body><h1>Email valido</h1></body></html>"   # EJEMPLO
+                    response_body = "<html><body><h1>Email valido</h1></body></html>"
+                    response_headers = [
+                        "HTTP/1.1 200 OK",
+                        "Date: {}".format(datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')),
+                        "Server: {}".format(NOMBRE_DOMINIO),
+                        "Content-Length: {}".format(len(response_body)),
+                        "Content-Type: text/html",
+                        "Connection: close",
+                        "\r\n"
+                    ]
                 else:
-                    response_body = "<html><body><h1>Email invalido</h1></body></html>" # EJEMPLO
-                
-                response_headers = [ #TODO: quizas cambiar
-                    "HTTP/1.1 200 OK",
-                    "Date: {}".format(datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')),
-                    "Server: {}".format(NOMBRE_DOMINIO),
-                    "Content-Length: {}".format(len(response_body)),
-                    "Content-Type: text/html",
-                    "Connection: close",
-                    "\r\n"
-                ]
+                    response_body = "<html><body><h1>Email invalido</h1></body></html>"
+                    response_headers = [
+                        "HTTP/1.1 401 Unauthorized",
+                        "Date: {}".format(datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')),
+                        "Server: {}".format(NOMBRE_DOMINIO),
+                        "Content-Length: {}".format(len(response_body)),
+                        "Content-Type: text/html",
+                        "Connection: close",
+                        "\r\n"
+                    ] 
+
                 response = "\r\n".join(response_headers) + response_body
                 enviar_mensaje(cs, response)
                 cerrar_conexion(cs)
