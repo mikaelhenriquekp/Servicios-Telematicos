@@ -18,7 +18,7 @@ NOMBRE_DOMINIO = "clubdeajedrez7565.org"
 EMAILS_VALIDOS = ["sebastian@" + NOMBRE_DOMINIO, "mikael@" + NOMBRE_DOMINIO]
 
 BUFSIZE = 8192                          # Tamaño máximo del buffer que se puede utilizar
-TIMEOUT_CONNECTION = 7 + 5 + 6 +5 + 10  # Timeout para la conexión persistente
+TIMEOUT_CONNECTION = 7 + 5 + 6 + 5 + 10 # Timeout para la conexión persistente
 MAX_ACCESOS = 10
 COOKIE_MAX_TIME = 2
 
@@ -247,9 +247,6 @@ def process_web_request(cs, webroot):
         logger.error("Error procesando solicitud: {}".format(e))
 
 def main():
-    """ Función principal del servidor
-    """
-
     try:
 
         # Argument parser para obtener la ip y puerto de los parámetros de ejecución del programa. IP por defecto 0.0.0.0
@@ -287,7 +284,7 @@ def main():
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.bind((args.host, args.port))
-        server_socket.listen() #parámetro opcional, recomiendan usar 64
+        server_socket.listen()
 
         logger.info("Servidor escuchando en {}:{}".format(args.host, args.port))
 
