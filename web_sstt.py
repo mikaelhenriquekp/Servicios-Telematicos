@@ -244,7 +244,9 @@ def process_web_request(cs, webroot):
             break
             """
     except Exception as e:
+        enviar_mensaje(cs, "HTTP/1.1 400 Bad Request\r\n\r\n")
         logger.error("Error procesando solicitud: {}".format(e))
+        cerrar_conexion(cs)
 
 def main():
     try:
