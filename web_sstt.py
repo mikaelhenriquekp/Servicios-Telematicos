@@ -250,8 +250,8 @@ def process_web_request(cs, webroot):
                         "Content-Type: text/html",
                         "Connection: close"
                     ]
-                    response = "\r\n".join(response_headers) + response_body
-                    enviar_mensaje(cs, f"{response}\r\n\r\n")
+                    response = "\r\n".join(response_headers) + response_body + "\r\n\r\n"
+                    enviar_mensaje(cs, response)
                     cerrar_conexion(cs)
                     break
                 response_headers.insert(-1, "Set-Cookie: cookie_counter_7565={}; Path=/; Max-Age={}".format(cookie_value, COOKIE_MAX_TIME))
@@ -273,8 +273,8 @@ def process_web_request(cs, webroot):
             "Content-Type: text/html",
             "Connection: close"
         ]
-        response = "\r\n".join(response_headers) + response_body
-        enviar_mensaje(cs, f"{response}\r\n\r\n")
+        response = "\r\n".join(response_headers) + response_body + "\r\n\r\n"
+        enviar_mensaje(cs, response)
         logger.error("Error procesando solicitud: {}".format(e))
         cerrar_conexion(cs)
 
