@@ -214,10 +214,10 @@ def process_web_request(cs, webroot):
                     "Server: {}".format(NOMBRE_DOMINIO),
                     "Content-Length: {}".format(len(response_body)),
                     "Content-Type: text/html",
-                    "Connection: close"
+                    "Connection: close",
+                    "\r\n"
                 ]
-                headerAndBody = [response_headers, response_body]
-                response = "\r\n".join(headerAndBody) + "\r\n\r\n"
+                response = "\r\n".join(response_headers) + response_body
                 enviar_mensaje(cs, response)
                 logger.error("Recurso '{}' no encontrado".format(resource))
                 cerrar_conexion(cs)
@@ -249,10 +249,10 @@ def process_web_request(cs, webroot):
                         "Server: {}".format(NOMBRE_DOMINIO),
                         "Content-Length: {}".format(len(response_body)),
                         "Content-Type: text/html",
-                        "Connection: close"
+                        "Connection: close",
+                        "\r\n"
                     ]
-                    headerAndBody = [response_headers, response_body]
-                    response = "\r\n".join(headerAndBody) + "\r\n\r\n"
+                    response = "\r\n".join(response_headers) + response_body
                     enviar_mensaje(cs, response)
                     cerrar_conexion(cs)
                     break
