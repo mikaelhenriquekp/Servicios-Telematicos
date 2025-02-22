@@ -20,7 +20,7 @@ EMAILS_VALIDOS = ["sebastian@" + NOMBRE_DOMINIO, "mikael@" + NOMBRE_DOMINIO]
 BUFSIZE = 8192                          # Tamaño máximo del buffer que se puede utilizar
 TIMEOUT_CONNECTION = 7 + 5 + 6 + 5 + 10 # Timeout para la conexión persistente
 MAX_ACCESOS = 10
-COOKIE_MAX_TIME = 2
+COOKIE_MAX_TIME = 120
 
 # Extensiones admitidas (extension, name in HTTP)
 filetypes = {"gif":"image/gif", "jpg":"image/jpg", "jpeg":"image/jpeg", "png":"image/png", "htm":"text/htm", 
