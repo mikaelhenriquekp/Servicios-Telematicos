@@ -275,8 +275,7 @@ def process_web_request(cs, webroot):
             "Content-Type: text/html",
             "Connection: close"
         ]
-        headerAndBody = [response_headers, response_body]
-        response = "\r\n".join(headerAndBody) + "\r\n\r\n"
+        response = "\r\n".join(response_headers) + response_body
         enviar_mensaje(cs, response)
         logger.error("Error procesando solicitud: {}".format(e))
         cerrar_conexion(cs)
