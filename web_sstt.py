@@ -182,7 +182,8 @@ def process_web_request(cs, webroot):
                         "Server: {}".format(NOMBRE_DOMINIO),
                         "Content-Length: {}".format(len(response_body)),
                         "Content-Type: text/html",
-                        "Connection: close",
+                        "Keep-Alive: timeout={}, max={}".format(TIMEOUT_CONNECTION, MAX_ACCESOS),
+                        "Connection: Keep-Alive",
                         "\r\n"
                     ]
                 else:
