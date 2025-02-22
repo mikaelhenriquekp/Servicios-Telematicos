@@ -216,8 +216,8 @@ def process_web_request(cs, webroot):
                     "Content-Type: text/html",
                     "Connection: close"
                 ]
-                response = "\r\n".join(response_headers) + response_body
-                enviar_mensaje(cs, f"{response}\r\n\r\n")
+                response = "\r\n".join(response_headers) + response_body + "\r\n\r\n"
+                enviar_mensaje(cs, response)
                 logger.error("Recurso '{}' no encontrado".format(resource))
                 cerrar_conexion(cs)
                 break
