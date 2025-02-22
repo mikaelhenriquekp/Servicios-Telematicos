@@ -216,7 +216,8 @@ def process_web_request(cs, webroot):
                     "Content-Type: text/html",
                     "Connection: close"
                 ]
-                response = "\r\n".join(response_headers) + response_body + "\r\n\r\n"
+                headerAndBody = [response_headers, response_body]
+                response = "\r\n".join(headerAndBody) + "\r\n\r\n"
                 enviar_mensaje(cs, response)
                 logger.error("Recurso '{}' no encontrado".format(resource))
                 cerrar_conexion(cs)
@@ -274,7 +275,8 @@ def process_web_request(cs, webroot):
             "Content-Type: text/html",
             "Connection: close"
         ]
-        response = "\r\n".join(response_headers) + response_body + "\r\n\r\n"
+        headerAndBody = [response_headers, response_body]
+        response = "\r\n".join(headerAndBody) + "\r\n\r\n"
         enviar_mensaje(cs, response)
         logger.error("Error procesando solicitud: {}".format(e))
         cerrar_conexion(cs)
