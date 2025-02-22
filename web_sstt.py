@@ -207,7 +207,17 @@ def process_web_request(cs, webroot):
             file_path = os.path.join(webroot, resource)
             logger.info("Recurso pedido: {}".format(resource))
             if not os.path.isfile(file_path):
-                enviar_mensaje(cs, "HTTP/1.1 404 Not Found\r\n\r\n")
+                response_body = "<html><body><h1>404 Not Found</h1></body></html>"
+                response_headers = [
+                    "HTTP/1.1 404 Not Found",
+                    "Date: {}".format(datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')),
+                    "Server: {}".format(NOMBRE_DOMINIO),
+                    "Content-Length: {}".format(len(response_body)),
+                    "Content-Type: text/html",
+                    "Connection: close"
+                ]
+                response = "\r\n".join(response_headers) + response_body
+                enviar_mensaje(cs, f"{response}\r\n\r\n")
                 logger.error("Recurso '{}' no encontrado".format(resource))
                 cerrar_conexion(cs)
                 break
@@ -231,7 +241,17 @@ def process_web_request(cs, webroot):
             if method == "GET" and resource == "index.html":
                 cookie_value = process_cookies(request_lines, cs)
                 if cookie_value >= MAX_ACCESOS:
-                    enviar_mensaje(cs, "HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n")
+                    response_body = "<html><body><h1>403 Forbidden</h1></body></html>"
+                    response_headers = [
+                        "HTTP/1.1 403 Forbidden",
+                        "Date: {}".format(datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')),
+                        "Server: {}".format(NOMBRE_DOMINIO),
+                        "Content-Length: {}".format(len(response_body)),
+                        "Content-Type: text/html",
+                        "Connection: close"
+                    ]
+                    response = "\r\n".join(response_headers) + response_body
+                    enviar_mensaje(cs, f"{response}\r\n\r\n")
                     cerrar_conexion(cs)
                     break
                 response_headers.insert(-1, "Set-Cookie: cookie_counter_7565={}; Path=/; Max-Age={}".format(cookie_value, COOKIE_MAX_TIME))
@@ -244,7 +264,17 @@ def process_web_request(cs, webroot):
             break
             """
     except Exception as e:
-        enviar_mensaje(cs, "HTTP/1.1 400 Bad Request\r\n\r\n")
+        response_body = "<html><body><h1>400 Bad Request</h1></body></html>"
+        response_headers = [
+            "HTTP/1.1 400 Bad Request",
+            "Date: {}".format(datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')),
+            "Server: {}".format(NOMBRE_DOMINIO),
+            "Content-Length: {}".format(len(response_body)),
+            "Content-Type: text/html",
+            "Connection: close"
+        ]
+        response = "\r\n".join(response_headers) + response_body
+        enviar_mensaje(cs, f"{response}\r\n\r\n")
         logger.error("Error procesando solicitud: {}".format(e))
         cerrar_conexion(cs)
 
