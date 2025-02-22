@@ -250,7 +250,8 @@ def process_web_request(cs, webroot):
                         "Content-Type: text/html",
                         "Connection: close"
                     ]
-                    response = "\r\n".join(response_headers) + response_body + "\r\n\r\n"
+                    headerAndBody = [response_headers, response_body]
+                    response = "\r\n".join(headerAndBody) + "\r\n\r\n"
                     enviar_mensaje(cs, response)
                     cerrar_conexion(cs)
                     break
