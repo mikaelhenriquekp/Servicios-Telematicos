@@ -261,11 +261,7 @@ def process_web_request(cs, webroot):
 
             response = "\r\n".join(response_headers).encode() + content # Convertir headers a bytes antes de concatenar
             enviar_mensaje(cs, response)
-            """
-            cs.sendall(response) #TODO: llamar a la función enviar_mensaje
-            cerrar_conexion(cs)
-            break
-            """
+            
     except Exception as e:
         response_body = "<html><body><h1>400 Bad Request</h1></body></html>"
         response_headers = [
